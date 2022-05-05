@@ -15,22 +15,28 @@ const Post = ({ post, setCurrentId }) => {
 
   return (
     <Card className={classes.card}>
-      <div className={classes.overlay}>
+      <CardContent>
         <Typography variant="h6">{post.clientName}</Typography>
         <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
-      </div>
-      <div className={classes.overlay2}>
-        <Button style={{ color: 'white' }} size="small" onClick={() => setCurrentId(post._id)}><MoreHorizIcon fontSize="default" /></Button>
-      </div>
-      <div className={classes.details}>
-        <Typography variant="body2" color="textSecondary" component="h2">{post.city}</Typography>
-      </div>
-      <Typography className={classes.title} gutterBottom variant="h5" component="h2">{post.balance}</Typography>
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">{post.haveMortgage}</Typography>
+      </CardContent>
+      <CardContent className={classes.overlay2}>
+        <Button style={{ backgroundColor: 'silver' }} size="small" onClick={() => setCurrentId(post._id)}><MoreHorizIcon fontSize="default" /></Button>
       </CardContent>
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">{post.numCreditCards}</Typography>
+        <Typography color="textPrimary" component="h4">Balance:</Typography>
+        <Typography className={classes.title} gutterBottom variant="h5" component="h2">{post.balance}</Typography>
+      </CardContent>
+      <CardContent className={classes.details}>
+        <Typography color="textPrimary" component="h4">City:</Typography>
+        <Typography className={classes.content} variant="body2" color="textSecondary" component="h2">{post.city}</Typography>
+      </CardContent>
+      <CardContent className={classes.details}>
+        <Typography color="textPrimary" component="h4">Mortgage:</Typography>
+        <Typography className={classes.content} variant="body2" color="textSecondary" component="p">{post.haveMortgage}</Typography>
+      </CardContent>
+      <CardContent className={classes.details}>
+        <Typography color="textPrimary" component="h4"># of Cards:</Typography>
+        <Typography className={classes.content} variant="body2" color="textSecondary" component="p">{post.numCreditCards}</Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
         <Button size="small" color="primary" onClick={() => dispatch(likePost(post._id))}><ThumbUpAltIcon fontSize="small" /> Like {post.likeCount} </Button>

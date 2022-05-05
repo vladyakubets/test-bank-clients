@@ -29,8 +29,8 @@ export default makeStyles({
   },
   overlay2: {
     position: 'absolute',
-    top: '20px',
-    right: '20px',
+    top: '0px',
+    right: '0px',
     color: 'white',
   },
   grid: {
@@ -38,8 +38,9 @@ export default makeStyles({
   },
   details: {
     display: 'flex',
-    justifyContent: 'space-between',
-    margin: '20px',
+    justifyContent: 'left',
+    alignItems: 'center',
+    paddingTop: '0'
   },
   title: {
     padding: '0 16px',
@@ -49,4 +50,7 @@ export default makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
   },
+  content: {
+    marginLeft: '10px'
+  }
 });
