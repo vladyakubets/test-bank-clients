@@ -7,21 +7,39 @@ const router = express.Router();
 
 export const getPosts = async (req, res) => {
     try {
-        const { min, max, cards, mortgage } = req.query
+        const { balanceMin, balanceMax, cardsMin, cardsMax, mortgage, city } = req.query
         let filters = {}
-        if (max && min) {
+
+        if (balanceMin && balanceMax) {
             filters.$and = [
-                { balance: { $gt: min } },
-                { balance: { $lt: max } }
+                { balance: { $gt: balanceMin } },
+                { balance: { $lt: balanceMax } }
             ]
-        }
-        if (cards) {
-            filters.numCreditCards = { $gt: +cards }
-        }
-        if (mortgage){
-            filters.haveMortgage = { $eq: mortgage }
+        } else if (balanceMin) {
+            filters.balance = { $gt: balanceMin }
+        } else if (balanceMax) {
+            filters.balance = { $lt: balanceMax }
         }
 
+        if (cardsMin && cardsMax) {
+            filters.$and = [
+                { numCreditCards: { $gt: cardsMin } },
+                { numCreditCards: { $lt: cardsMax } }
+            ]
+        } else if (cardsMin) {
+            filters.numCreditCards = { $gt: cardsMin }
+        } else if (cardsMax) {
+            filters.numCreditCards = { $lt: cardsMax }
+        }
+
+        if (mortgage) {
+            filters.haveMortgage = { $eq: mortgage }
+        }
+        
+        if (city) {
+            filters.city = { $eq: city }
+        }
+        
         const postMessages = async () => {
             if (Object.keys(req.query).length) return await PostMessage.find(filters)
             return await PostMessage.find();
@@ -29,6 +47,15 @@ export const getPosts = async (req, res) => {
 
         res.status(200).json(await postMessages());
     } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+export const getCities = async (req,res) => {
+    try{
+        const cities = await PostMessage.distinct('city')
+        res.status(200).json(cities)
+    }catch (error){
         res.status(404).json({ message: error.message });
     }
 }

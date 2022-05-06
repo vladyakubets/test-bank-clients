@@ -7,6 +7,7 @@ import Form from './components/Form/Form';
 import { getPosts } from './actions/posts';
 import useStyles from './styles';
 import { FETCH_ALL } from './constants/actionTypes';
+import { getCities } from './actions/cities';
 
 
 const App = () => {
@@ -15,17 +16,25 @@ const App = () => {
   const classes = useStyles();
 
   const handleSubmit = (value) => {
-    const { min, max, cards, mortgage } = value
+    const { balanceMin, balanceMax, cardsMin,cardsMax, mortgage, city } = value
     let filters = {}
-    if (max && min) {
-      filters.min = min
-      filters.max = max
+    if (balanceMin) {
+      filters.balanceMin = balanceMin
     }
-    if (cards) {
-      filters.cards = cards
+    if (balanceMax) {
+      filters.balanceMax = balanceMax
+    }
+    if (cardsMin) {
+      filters.cardsMin = cardsMin
+    }
+    if (cardsMax) {
+      filters.cardsMax = cardsMax
     }
     if (mortgage) {
       filters.mortgage = mortgage.charAt(0).toUpperCase() + mortgage.slice(1)
+    }
+    if (city){
+      filters.city = city
     }
     if (Object.keys(filters).length) {
       dispatch({ type: FETCH_ALL, payload: [] });
@@ -35,6 +44,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getPosts());
+    dispatch(getCities())
   }, [currentId, dispatch]);
 
   return (
