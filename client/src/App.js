@@ -39,7 +39,10 @@ const App = () => {
     if (Object.keys(filters).length) {
       dispatch({ type: FETCH_ALL, payload: [] });
       dispatch(getPosts(filters))
-    }
+      return
+    } 
+    dispatch({ type: FETCH_ALL, payload: [] });
+    dispatch(getPosts())
   }
 
   useEffect(() => {
